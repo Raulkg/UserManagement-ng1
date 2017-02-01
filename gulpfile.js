@@ -25,7 +25,7 @@ gulp.task('lint', function() {
 
 gulp.task('clean', function(cb) {
   // You can use multiple globbing patterns as you would with `gulp.src`
-  del(['dist'], cb);
+  del(['docs'], cb);
 });
 
 
@@ -33,7 +33,7 @@ gulp.task('minify-css', function() {
   var opts = {comments:true,spare:true};
   gulp.src(['./app/**/*.css', '!./app/bower_components/**'])
     .pipe(minifyCSS(opts))
-    .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest('./docs/'))
 });
 gulp.task('minify-js', function() {
   gulp.src(['./app/**/*.js', '!./app/bower_components/**'])
@@ -41,15 +41,15 @@ gulp.task('minify-js', function() {
       // inSourceMap:
       // outSourceMap: "app.js.map"
     }))
-    .pipe(gulp.dest('./dist/'))
+    .pipe(gulp.dest('./docs/'))
 });
 gulp.task('copy-bower-components', function () {
   gulp.src('./app/bower_components/**')
-    .pipe(gulp.dest('dist/bower_components'));
+    .pipe(gulp.dest('docs/bower_components'));
 });
 gulp.task('copy-html-files', function () {
   gulp.src('./app/**/*.html')
-    .pipe(gulp.dest('dist/'));
+    .pipe(gulp.dest('docs/'));
 });
 
 
