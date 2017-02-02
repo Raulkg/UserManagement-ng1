@@ -26,7 +26,7 @@
                           	
                           		
 
-                     <input type="search" id="search" class="formcontrol" ng-model="search">
+                     <input type="search" id="search" class="form-control" ng-model="search">
                
                   </div>
                 </div>
@@ -37,18 +37,16 @@
                   <thead>
                     <tr>
                        
-                        <th class="hidden-xs">User ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Password</th>
+                        <th class="hidden-xs">ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
                     </tr> 
                   </thead>
                   <tbody>
-                          <tr ng-repeat="x in data1 | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize" >
-                            <td class="hidden-xs" >{{x.username}}</td>
-                            <td>{{x.firstname}}</td>
-                            <td>{{x.lastname}}</td>
-                               <td>{{x.password}}</td>
+                          <tr>
+                            <td class="hidden-xs">{{data1.id}}</td>
+                            <td>{{data1.name}}</td>
+                            <td>{{data1.link}}</td>
                           </tr>
                     </tbody>
                 </table>
@@ -56,22 +54,17 @@
               </div>
               <div class="panel-footer">
                 <div class="row">
-                  <div class="col col-xs-4">Page  {{currentPage+1}}/{{numberOfPages()}}
+                  <div class="col col-xs-4">Page 1 of 5
                   </div>
                   <div class="col col-xs-8">
-
-                  
-
-                   
-
-
-                            <Button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-          Previous
-    </Button>
-    <button ng-click=""> {{currentPage+1}} </button>
-    <button ng-disabled="currentPage >= numberOfPages() - 1" ng-click="currentPage=currentPage+1">
-      Next
-    </Button>
+                    <ul class="pagination hidden-xs pull-right">
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                    </ul>
+                    <ul class="pagination visible-xs pull-right">
+                        <li><a href="#">«</a></li>
+                        <li><a href="#">»</a></li>
                     </ul>
                   </div>
                 </div>

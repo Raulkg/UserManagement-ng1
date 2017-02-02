@@ -5,8 +5,10 @@
         .module('myApp')
         .controller('LoginController', LoginController);
  
-    LoginController.$inject = ['$state',  '$window','AuthenticationService' , 'UserService'];
-    function LoginController($state,  $window, AuthenticationService,UserService) {
+    LoginController.$inject = ['$state', '$scope','$cookies','$window','AuthenticationService' , 'UserService','rememberMeService'];
+    function LoginController($state,  $scope, $cookies,$window, AuthenticationService,UserService,rememberMeService) {
+
+        $scope.error = null;
         var vm = this;
  
         vm.login = login;
@@ -17,21 +19,40 @@
 
             var admin = {username:'Admin',password:'Tiger123#'};
                     UserService.Create(admin);
+
+    if (rememberMeService.eget('7ZXYZ@L') && rememberMeService.eget('UU@#90')) {
+       vm.username = rememberMeService.eget('7ZXYZ@L');
+         vm.password= rememberMeService.eget('UU@#90');
+
+         console.log(vm.password);
+    } 
                  
         })();
+
+
+
  
         function login() {
             vm.dataLoading = true;
+
+                    if (vm.remember) {
+ 
+            rememberMeService.eset('7ZXYZ@L',vm.username);
+            rememberMeService.eset('UU@#90',  vm.password);
+        } 
+
+
           
             AuthenticationService.Login(vm.username, vm.password, function (response) {
                 if (response.success) {
              
                     AuthenticationService.SetCredentials(vm.username, vm.password);
-                    
+   
                     $state.go('home');
+ 
                 } else {
-                    // FlashService.Error(response.message);
-                       console.log(response.message);
+                 
+                       $scope.error= 'Try Again! '+response.message;
                          $state.go('auth');
                     vm.dataLoading = false;
                 }

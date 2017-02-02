@@ -1,18 +1,3 @@
-<div ng-controller="AdminViewUserController as hc" ><nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-
-      <a class="navbar-brand" href="#"> {{user}}</a>
-    </div>
-    <ul class="nav navbar-nav">
-     <!--  <li class="active"><a href="#">Home</a></li> -->
- 		<li ng-repeat ="myItem in data"><a ui-sref="{{myItem.link}}" ng-click="sillyQA()" >{{myItem.name}}</a></li>
-      <li><a href="#">Sign Out</a></li>
-    </ul>
-  </div>
-</nav>
-
-
 
  <div class="col-md-10 col-md-offset-1">
 
@@ -45,7 +30,7 @@
                   </thead>
                   <tbody>
                           <tr ng-repeat="x in data1 | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize" >
-                            <td class="hidden-xs" >{{x.id}}</td>
+                            <td class="hidden-xs" >{{x.username}}</td>
                             <td>{{x.firstname}}</td>
                             <td>{{x.lastname}}</td>
                                <td>{{x.password}}</td>
@@ -69,7 +54,7 @@
           Previous
     </Button>
     <button ng-click=""> {{currentPage+1}} </button>
-    <button ng-disabled="currentPage >= getData().length/pageSize - 1" ng-click="currentPage=currentPage+1">
+    <button ng-disabled="currentPage >= numberOfPages() - 1" ng-click="currentPage=currentPage+1">
       Next
     </Button>
                     </ul>

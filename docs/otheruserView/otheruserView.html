@@ -1,0 +1,97 @@
+<div ng-controller="OtherUserController as oc" ><nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+
+      <a class="navbar-brand" href="#"> {{user.username}}</a>
+    </div>
+    <ul class="nav navbar-nav">
+     <!--  <li class="active"><a href="#">Home</a></li> -->
+ 		<li ng-repeat ="myItem in data"><a ui-sref="{{myItem.link}}" ng-click="sillyQA()" >{{myItem.name}}</a></li>
+      <li><a href="#">Sign Out</a></li>
+    </ul>
+  </div>
+</nav>
+
+  <form name="form2" class="myform1"  ng-submit="form2.$valid && updateUser()" role="form" novalidate="novalidate" autocomplete="off" >
+  
+<div class="container">
+
+
+
+<div class="row">
+  <div class="col-sm-4">
+
+
+  <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+  
+  <input type="text"  placeholder="User ID"  ng-disabled="true" ng-model="user.username"  class="form-control" id="usr">
+</div>
+
+
+
+  </div>
+  <div class="col-sm-4">
+
+  <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+
+  <input type="text" placeholder="Password"  ng-model="user.password"   class="form-control" id="usr" required >
+</div>
+
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">
+
+
+  <div class="form-group">
+
+  <input type="text"  placeholder="First Name"  ng-model="user.firstname"   class="form-control" id="usr">
+</div>
+
+
+
+  </div>
+  <div class="col-sm-4">
+
+
+  <input type="text"  placeholder="Last Name" ng-model="user.lastname"  class="form-control" id="usr">
+</div>
+
+
+  </div>
+
+
+  <div class="row">
+  <div class="col-sm-8"><button  type="submit" ng-submit="updateUser()"class="btn btn-primary"> Update</button></div>
+  <div class="col-sm-4">     <span ng-bind="msg" ></span >
+      <div ng-messages="form.password.$error">
+        <p ng-message="pattern">Your password is must contain atleast one capital , one small , one spl Character and one Integer.</p>
+        <p ng-message="maxlength">Your password is too long.</p>
+        <p ng-message="required">Your Passowrd is required.</p>
+         <span ng-bind="error" ></span >
+    </div>
+
+
+  </div>
+  
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</form>
+
+
+
+
+
+
+</div>

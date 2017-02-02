@@ -10,15 +10,15 @@
  	
 
  
-    	$scope.data = [{"name":'Add Users',"link":'home'}, {"name":'View Users',"link":'adminViewUsers'}];
+  
     $scope.currentPage = 0;
     $scope.pageSize = 3;
 		$scope.user = null;
 
-       $scope.data1 = UserService.getUsers();
+       $scope.data1 = UserService.getUsers().slice(1);
            $scope.numberOfPages=function(){
         return Math.ceil(UserService.getUsers().length/$scope.pageSize);                
-    }
+    };
     
 
 
@@ -38,7 +38,7 @@
         }
     
 
-    };
+    }
 
 
    angular

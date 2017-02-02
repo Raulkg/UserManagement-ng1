@@ -3,23 +3,19 @@
  
     angular
         .module('myApp')
-        .controller('HomeController', HomeController);
+        .controller('adminAddUserController', adminAddUserController);
  
-    HomeController.$inject = ['$state', '$timeout','$rootScope', '$scope','AuthenticationService' , 'UserService'];
-    function HomeController($state,$timeout,$scope,$rootScope, AuthenticationService,UserService) {
+    adminAddUserController.$inject = ['$state', '$timeout','$rootScope', '$scope','AuthenticationService' , 'UserService'];
+    function adminAddUserController($state,$timeout,$scope,$rootScope, AuthenticationService,UserService) {
  	
 
  
- 
-
+    
 		$scope.user = null;
         $scope.formInfo = {};
         loadCurrentUser();
      $scope.msg1 = null;
-   if(  $scope.user === 'Admin')
-    $scope.data = [{"name":'Add Users',"link":'.adminAddUser'}, {"name":'View Users',"link":'.adminViewUsers'}];
-  else
-    $scope.data = [{"name":'My Profile',"link":'.oview'}];
+        
 
      function loadCurrentUser() {
 
@@ -42,7 +38,7 @@
           UserService.Create(nwuser).then(    
     function(thing) {     // On success
       $timeout(function () {
-             $state.go("adminViewUsers",{},{reload:true});
+             $state.transitionTo("home.adminViewUsers",{},{reload:true});
   }, 1000);
 
     },

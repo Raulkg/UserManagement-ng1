@@ -1,7 +1,7 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-var rApp =  angular.module('myApp', ['ngMaterial','ngCookies','ngAnimate','ngAria','ngMessages','ui.router']);
+var rApp =  angular.module('myApp', ['ngMaterial','ngCookies','ngAnimate','ngAria','ngMessages','ngAnimate','ui.router']);
 
 rApp.config(function($stateProvider, $urlRouterProvider) {
  
@@ -27,11 +27,22 @@ rApp.config(function($stateProvider, $urlRouterProvider) {
  $stateProvider
 
    
-    .state('adminViewUsers', {
+    .state('home.adminViewUsers', {
         url: '/adminViewUsers',
 
         templateUrl: 'adminViewUsers/adminViewUsers.html',
          controller: "AdminViewUserController",
+           
+             data: {
+        requireLogin: true
+      }
+    });
+
+         $stateProvider.state('home.adminAddUser', {
+        url: '/adminAddUser',
+
+        templateUrl: 'adminAddUsers/adminAddUsers.html',
+         controller: "adminAddUserController",
            
              data: {
         requireLogin: true
@@ -53,6 +64,23 @@ rApp.config(function($stateProvider, $urlRouterProvider) {
         requireLogin: false
       }
     });
+
+
+
+
+$stateProvider
+
+   
+    .state('home.oview', {
+        url: '/oview',
+        templateUrl: 'otheruserView/otheruserView.html',
+         controller: "OtherUserController",
+ 
+             data: {
+        requireLogin: true
+      }
+    });
+
 
 
 });
