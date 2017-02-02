@@ -18,12 +18,13 @@
      $scope.msg1 = null;
    if(  $scope.user === 'Admin'){
     $scope.data = [{"name":'Add Users',"link":'.adminAddUser'}, {"name":'View Users',"link":'.adminViewUsers'}];
-     
+     $state.go('home.adminAddUser'); 
   }
-  else
+  else{
     $scope.data = [{"name":'My Profile',"link":'.oview'}];
-
- $state.go('home.adminAddUser');
+  
+  $state.go('home.oview'); 
+}
 
      function loadCurrentUser() {
 
