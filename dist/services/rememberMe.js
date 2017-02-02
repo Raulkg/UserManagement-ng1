@@ -3,92 +3,73 @@
 
     angular
         .module('myApp')
-        .factory('AuthenticationService', AuthenticationService);
+        .factory('rememberMeService', rememberMeService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
 
-    function AuthenticationService($http, $cookies, $rootScope, $timeout, UserService) {
+    rememberMeService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', 'UserService'];
+
+    function rememberMeService($http, $cookies, $rootScope, $timeout, UserService) {
+
         var service = {};
 
-        service.Login = Login;
-        service.SetCredentials = SetCredentials;
-        service.ClearCredentials = ClearCredentials;
-        service.isAuthenticated = isAuthenticated;
+        service.eget = eget;
+        service.eset = eset;
+
         return service;
 
-        function Login(username, password, callback) {
 
 
-            $timeout(function() {
-                var response;
-                UserService.GetByUsername(username)
-                    .then(function(user) {
-                        if (user !== null && user.password === password) {
-                            response = {
-                                success: true
-                            };
-                        } else {
-
-
-                            response = {
-                                success: false,
-                                message: 'Username or password is incorrect'
-                            };
-                        }
-                        callback(response);
-                    });
-            }, 1000);
-
-
-
-        }
-
-        function SetCredentials(username, password) {
-            var authdata = Base64.encode(username + ':' + password);
-
-
-            console.log("set credentials called here");
-            $rootScope.globals = {
-                currentUser: {
-                    username: username,
-                    authdata: authdata
+        function eget(name) {
+            var gCookieVal = document.cookie.split("; ");
+            for (var i = 0; i < gCookieVal.length; i++) {
+                // a name/value pair (a crumb) is separated by an equal sign
+                var gCrumb = gCookieVal[i].split("=");
+                if (name === gCrumb[0]) {
+                    var value = '';
+                    try {
+                        value = angular.fromJson(gCrumb[1]);
+                    } catch (e) {
+                        value = unescape(gCrumb[1]);
+                    }
+                    return Base64.decode(value);
                 }
-            };
-
-            // set default auth header for http requests
-            $http.defaults.headers.common.Authorization = 'Basic ' + authdata;
-
-            // store user details in globals cookie that keeps user logged in for 1 week (or until they logout)
-            var cookieExp = new Date();
-            cookieExp.setDate(cookieExp.getDate() + 7);
-            $cookies.putObject('globals', $rootScope.globals, {
-                expires: cookieExp
-            });
-        }
-
-
-
-
-
-        function ClearCredentials() {
-            $rootScope.globals = {};
-            $cookies.remove('globals');
-            $http.defaults.headers.common.Authorization = 'Basic';
-        }
-
-        function isAuthenticated() {
-
-            return true;
+            }
+            // a cookie with the requested name does not exist
 
         }
 
 
+
+        function eset(name, values) {
+            // name = 
+            if (arguments.length === 1) return eget(name);
+            var cookie = name + '=';
+            if (typeof values === 'object') {
+                var expires = '';
+                cookie += (typeof values.value === 'object') ? angular.toJson(values.value) + ';' : values.value + ';';
+                if (values.expires) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + (values.expires * 24 * 60 * 60 * 1000));
+                    expires = date.toGMTString();
+                }
+                cookie += (!values.session) ? 'expires=' + expires + ';' : '';
+                cookie += (values.path) ? 'path=' + values.path + ';' : '';
+                cookie += (values.secure) ? 'secure;' : '';
+            } else {
+                cookie += Base64.encode(values) + ';';
+            }
+            document.cookie = cookie;
+
+
+
+        }
 
 
 
     }
 
-    // Base64 encoding service used by AuthenticationService
+
+
     var Base64 = {
 
         keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
@@ -171,5 +152,6 @@
             return output;
         }
     };
+
 
 })();

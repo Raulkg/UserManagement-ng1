@@ -1,84 +1,23 @@
-<div ng-controller="HomeController as hc" >
+<div  >
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
 
-      <a class="navbar-brand" href="#"> {{user}}</a>
+      <a class="navbar-brand" > {{user}}</a>
     </div>
     <ul class="nav navbar-nav">
      <!--  <li class="active"><a href="#">Home</a></li> -->
- 		<li ng-repeat ="myItem in data"><a ui-sref="{{myItem.link}}" ng-click="" >{{myItem.name}}</a></li>
+ 		<li ng-repeat ="myItem in data"  ui-sref-active="active"><a ui-sref="{{myItem.link}}"  >{{myItem.name}}</a></li>
       <li><a href="#">Sign Out</a></li>
     </ul>
   </div>
 </nav>
 
 
-  <form name="form1" class="myform1"  ng-submit="form1.$valid && addUser()" role="form" novalidate="novalidate" autocomplete="off" >
-<div class="container">
-<div class="row">
-  <div class="col-sm-4">
+
+<div ui-view></div>
 
 
-  <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
-  
-  <input type="text"  placeholder="User Name"  ng-model="formInfo.usrid"  class="form-control" id="usr">
-</div>
-
-
-
-  </div>
-  <div class="col-sm-4">
-
-  <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-
- <input type="text" name="password" placeholder="Password"  id="password" class="form-control"  ng-model="formInfo.pwd"  required ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/">
-</div>
-
-
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-4">
-
-
-  <div class="form-group">
-
-  <input type="text"  placeholder="First Name"  ng-model="formInfo.fn"   class="form-control" id="usr">
-</div>
-
-
-
-  </div>
-  <div class="col-sm-4">
-
-
-  <input type="text"  placeholder="Last Name" ng-model="formInfo.ln"  class="form-control" id="usr">
-</div>
-
-
-  </div>
-
-  <div class="row">
-  <div class="col-sm-8"><button   type="submit" ng-submit="addUser()"class="btn btn-primary"> Add User</button></div>
-  <div class="col-sm-4"> <span ng-bind="msg1" ></span >
-
-      <div ng-messages="form1.password.$error">
-        <p ng-message="pattern">Your password is must contain atleast one capital , one small , one spl Character and one Integer.</p>
-        <p ng-message="maxlength">Your password is too long.</p>
-        <p ng-message="required">Your Passowrd is required.</p>
-         <span ng-bind="error" ></span >
-    </div>
-  </div>
-  
-</div>
-
-
-
-</div>
-
-  </form>
 
 
 

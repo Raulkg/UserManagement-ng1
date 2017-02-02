@@ -11,21 +11,9 @@
 
  
     
-		$scope.user = null;
+
         $scope.formInfo = {};
-        loadCurrentUser();
-     $scope.msg1 = null;
-        
 
-     function loadCurrentUser() {
-
-
-
-            UserService.GetByUsername($rootScope.globals.currentUser.username)
-                .then(function (user) {
-                     	$scope.user = user.username;
-                });
-        }
 
 
         $scope.addUser = function (){
@@ -38,7 +26,7 @@
           UserService.Create(nwuser).then(    
     function(thing) {     // On success
       $timeout(function () {
-             $state.transitionTo("home.adminViewUsers",{},{reload:true});
+             $state.go("home.adminViewUsers");
   }, 1000);
 
     },

@@ -1,1 +1,138 @@
-!function(){"use strict";function e(e,r,n){function t(){var e=n.defer();return e.resolve(a()),e.promise}function s(e){var t=n.defer(),s=r("filter")(a(),{id:e}),i=s.length?s[0]:null;return t.resolve(i),t.promise}function i(e){var t=n.defer(),s=r("filter")(a(),{username:e}),i=s.length?s[0]:null;return t.resolve(i),t.promise}function o(r){var t=n.defer();return e(function(){i(r.username).then(function(e){if(null!==e)t.resolve({success:!1,message:'Username "'+r.username+'" is already taken'});else{var n=a(),s=n[n.length-1]||{id:0};r.id=s.id+1,n.push(r),f(n),t.resolve({success:!0})}})},1e3),t.promise}function l(e){for(var r=n.defer(),t=a(),s=0;s<t.length;s++)if(t[s].id===e.id){t[s]=e;break}return f(t),r.resolve(),r.promise}function u(e){for(var r=n.defer(),t=a(),s=0;s<t.length;s++){var i=t[s];if(i.id===e){t.splice(s,1);break}}return f(t),r.resolve(),r.promise}function a(){return localStorage.users||(localStorage.users=JSON.stringify([])),JSON.parse(localStorage.users)}function f(e){localStorage.users=JSON.stringify(e)}var c={};return c.GetAll=t,c.GetById=s,c.GetByUsername=i,c.Create=o,c.Update=l,c.Delete=u,c}angular.module("myApp").factory("UserService",e),e.$inject=["$timeout","$filter","$q"]}();
+(function() {
+    'use strict';
+
+    angular
+        .module('myApp')
+        .factory('UserService', UserService);
+
+    UserService.$inject = ['$timeout', '$filter', '$q'];
+
+    function UserService($timeout, $filter, $q) {
+
+
+
+        var service = {};
+
+        service.GetAll = GetAll;
+        service.GetById = GetById;
+        service.GetByUsername = GetByUsername;
+        service.Create = Create;
+        service.Update = Update;
+        service.Delete = Delete;
+        service.getUsers = getUsers;
+
+        return service;
+
+
+
+        function GetAll() {
+            var deferred = $q.defer();
+            deferred.resolve(getUsers());
+            return deferred.promise;
+        }
+
+        function GetById(id) {
+            var deferred = $q.defer();
+            var filtered = $filter('filter')(getUsers(), {
+                id: id
+            });
+            var user = filtered.length ? filtered[0] : null;
+            deferred.resolve(user);
+            return deferred.promise;
+        }
+
+
+
+        function GetByUsername(username) {
+            var deferred = $q.defer();
+            var filtered = $filter('filter')(getUsers(), {
+                username: username
+            });
+            var user = filtered.length ? filtered[0] : null;
+            deferred.resolve(user);
+            return deferred.promise;
+        }
+
+        function Create(user) {
+            var deferred = $q.defer();
+
+            // simulate api call with $timeout
+            $timeout(function() {
+                GetByUsername(user.username)
+                    .then(function(duplicateUser) {
+                        if (duplicateUser !== null) {
+                            deferred.reject({
+                                success: false,
+                                message: 'Username "' + user.username + '" is already taken'
+                            });
+                        } else {
+                            var users = getUsers();
+
+                            // assign id
+                            var lastUser = users[users.length - 1] || {
+                                id: 0
+                            };
+                            user.id = lastUser.id + 1;
+
+                            // save to local storage
+                            users.push(user);
+                            setUsers(users);
+
+                            deferred.resolve({
+                                success: true
+                            });
+                        }
+                    });
+            }, 1000);
+
+            return deferred.promise;
+        }
+
+        function Update(user) {
+            var deferred = $q.defer();
+
+            var users = getUsers();
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].id === user.id) {
+                    users[i] = user;
+                    break;
+                }
+            }
+            setUsers(users);
+            deferred.resolve();
+
+            return deferred.promise;
+        }
+
+        function Delete(id) {
+            var deferred = $q.defer();
+
+            var users = getUsers();
+            for (var i = 0; i < users.length; i++) {
+                var user = users[i];
+                if (user.id === id) {
+                    users.splice(i, 1);
+                    break;
+                }
+            }
+            setUsers(users);
+            deferred.resolve();
+
+            return deferred.promise;
+        }
+
+
+
+        function getUsers() {
+            if (!localStorage.users) {
+                localStorage.users = JSON.stringify([]);
+            }
+
+            return JSON.parse(localStorage.users);
+        }
+
+        function setUsers(users) {
+            localStorage.users = JSON.stringify(users);
+        }
+    }
+})();

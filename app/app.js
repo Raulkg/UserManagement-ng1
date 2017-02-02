@@ -17,11 +17,18 @@ rApp.config(function($stateProvider, $urlRouterProvider) {
 
         templateUrl: 'home/home.html',
          controller: "HomeController",
-           
+        
              data: {
         requireLogin: true
-      }
+      },
+          params: {
+        obj: null
+    }
+
     });
+
+
+
 
 
  $stateProvider

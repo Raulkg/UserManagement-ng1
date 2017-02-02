@@ -11,7 +11,13 @@ var del = require('del');
 var stripDebug = require('gulp-strip-debug');
 var vinylPaths = require('vinyl-paths');
 var browserSync = require('browser-sync');
+var prettify = require('gulp-jsbeautifier');
 
+gulp.task('prettify', function() {
+  gulp.src(['./*.css', './*.html', './*.js','./app/**/*.js'])
+    .pipe(prettify())
+    .pipe(gulp.dest('./dist'));
+});
 
 
 gulp.task('lint', function() {
@@ -67,7 +73,7 @@ gulp.task('connect', function () {
 gulp.task('build', function() {
   runSequence(
   	
-    ['lint', 'minify-css', 'minify-js', 'copy-html-files', 'copy-bower-components', 'connect']
+    ['lint', 'minify-css', 'prettify','minify-js', 'copy-html-files', 'copy-bower-components', 'connect']
   );
 });
 

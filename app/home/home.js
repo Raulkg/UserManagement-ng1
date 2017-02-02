@@ -5,21 +5,25 @@
         .module('myApp')
         .controller('HomeController', HomeController);
  
-    HomeController.$inject = ['$state', '$timeout','$rootScope', '$scope','AuthenticationService' , 'UserService'];
-    function HomeController($state,$timeout,$scope,$rootScope, AuthenticationService,UserService) {
+    HomeController.$inject = ['$state','$stateParams', '$timeout','$rootScope', '$scope','AuthenticationService' , 'UserService'];
+    function HomeController($state,$stateParams,$timeout,$scope,$rootScope, AuthenticationService,UserService) {
  	
 
  
  
 
-		$scope.user = null;
+		$scope.user = $stateParams.obj;
         $scope.formInfo = {};
         loadCurrentUser();
      $scope.msg1 = null;
-   if(  $scope.user === 'Admin')
+   if(  $scope.user === 'Admin'){
     $scope.data = [{"name":'Add Users',"link":'.adminAddUser'}, {"name":'View Users',"link":'.adminViewUsers'}];
+     
+  }
   else
     $scope.data = [{"name":'My Profile',"link":'.oview'}];
+
+ $state.go('home.adminAddUser');
 
      function loadCurrentUser() {
 
@@ -32,29 +36,6 @@
         }
 
 
-        $scope.addUser = function (){
-
-
-         
-
-            var nwuser = {username: $scope.formInfo.usrid , password : $scope.formInfo.pwd ,firstname: $scope.formInfo.fn,lastname: $scope.formInfo.ln};
-
-          UserService.Create(nwuser).then(    
-    function(thing) {     // On success
-      $timeout(function () {
-             $state.go("adminViewUsers",{},{reload:true});
-  }, 1000);
-
-    },
-    function(message) {   // On failure
-        // $scope.msg = message.message;
-         $scope.msg1  = message.message;
-    }
-);
-
-        
-
-        };
     
 
     }

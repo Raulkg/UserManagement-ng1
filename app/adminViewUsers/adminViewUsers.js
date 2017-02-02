@@ -13,7 +13,7 @@
   
     $scope.currentPage = 0;
     $scope.pageSize = 3;
-		$scope.user = null;
+
 
        $scope.data1 = UserService.getUsers().slice(1);
            $scope.numberOfPages=function(){
@@ -23,19 +23,6 @@
 
 
 
-
-        loadCurrentUser();
-
- 
-     function loadCurrentUser() {
-
-
-
-            UserService.GetByUsername($rootScope.globals.currentUser.username)
-                .then(function (user) {
-                     	$scope.user = user.username;
-                });
-        }
     
 
     }

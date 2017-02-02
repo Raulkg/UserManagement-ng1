@@ -12,7 +12,7 @@
  
  
 
-		$scope.user = null;
+		$scope.usero = null;
 
      $scope.msg = null;
     
@@ -29,7 +29,7 @@
 
             UserService.GetByUsername($rootScope.globals.currentUser.username)
                 .then(function (user) {
-                     	$scope.user = user;
+                     	$scope.usero = user;
                 });
         }
 
@@ -38,7 +38,7 @@
 
         $scope.updateUser = function (){
 
-            var nwuser = { id:  $scope.user.id  ,username: $scope.user.username , password : $scope.user.password ,firstname: $scope.user.firstname,lastname: $scope.user.lastname};
+            var nwuser = { id:  $scope.usero.id  ,username: $scope.usero.username , password : $scope.usero.password ,firstname: $scope.usero.firstname,lastname: $scope.usero.lastname};
 
             UserService.Update(nwuser);      
 

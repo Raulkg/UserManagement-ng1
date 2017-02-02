@@ -1,1 +1,42 @@
-!function(){"use strict";function e(e,n,r,s,i){function t(){i.GetByUsername(r.globals.currentUser.username).then(function(e){n.user=e.username})}n.data=[{name:"Add Users",link:"home"},{name:"View Users",link:"adminViewUsers"}],n.data1=[{id:"1",name:"Add Users",link:"home"},{id:"2",name:"View Users",link:"adminViewUsers"}],n.user=null,t()}angular.module("myApp").controller("AdminViewUserController",e),e.$inject=["$state","$rootScope","$scope","AuthenticationService","UserService"]}();
+(function() {
+    'use strict';
+
+    angular
+        .module('myApp')
+        .controller('AdminViewUserController', AdminViewUserController);
+
+    AdminViewUserController.$inject = ['$state', '$rootScope', '$scope', 'AuthenticationService', 'UserService'];
+
+    function AdminViewUserController($state, $scope, $rootScope, AuthenticationService, UserService) {
+
+
+
+
+        $scope.currentPage = 0;
+        $scope.pageSize = 3;
+
+
+        $scope.data1 = UserService.getUsers().slice(1);
+        $scope.numberOfPages = function() {
+            return Math.ceil(UserService.getUsers().length / $scope.pageSize);
+        };
+
+
+
+
+
+
+    }
+
+
+    angular
+        .module('myApp').filter('startFrom', function() {
+            return function(input, start) {
+                start = +start; //parse to int
+                return input.slice(start);
+            };
+        });
+
+
+
+})();

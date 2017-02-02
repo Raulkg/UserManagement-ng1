@@ -24,7 +24,6 @@
        vm.username = rememberMeService.eget('7ZXYZ@L');
          vm.password= rememberMeService.eget('UU@#90');
 
-         console.log(vm.password);
     } 
                  
         })();
@@ -48,7 +47,7 @@
              
                     AuthenticationService.SetCredentials(vm.username, vm.password);
    
-                    $state.go('home');
+                    $state.go('home',{obj:vm.username});
  
                 } else {
                  
