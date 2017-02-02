@@ -1,1 +1,0 @@
-"use strict";describe("myApp.home module",function(){beforeEach(module("myApp.home")),describe("home controller",function(){it("should ....",inject(function(e){var o=e("homeCtrl");expect(o).toBeDefined()}))})});

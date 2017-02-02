@@ -109,7 +109,15 @@ angular.module("myApp").run(function ($rootScope, $state, AuthenticationService)
       event.preventDefault(); 
     }
 
+
+if(typeof toState.data.requireLogin == "undefined")
+{
+ $state.transitionTo("auth");
+      event.preventDefault(); 
+
+}
    
 
   });
+
 });

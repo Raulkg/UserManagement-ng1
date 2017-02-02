@@ -1,1 +1,0 @@
-"use strict";angular.module("myApp.version.interpolate-filter",[]).filter("interpolate",["version",function(e){return function(r){return String(r).replace(/\%VERSION\%/gm,e)}}]);
