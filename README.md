@@ -9,3 +9,6 @@ This is a AngularJS Application implementation of user management.
 [![Working](https://img.shields.io/badge/Working-yes-brightgreen.svg)]()
 [![Working](https://img.shields.io/badge/Implemented-5%25-red.svg)]()
 [![Version](https://img.shields.io/badge/version-v0.0.1-brightgreen.svg)]()
+
+
+![Alt text](https://github.com/Raulkg/UserManagement-ng1/blob/master/Screen%20Shot%202017-02-02%20at%203.24.30%20PM.png?raw=true "Admin Page")
