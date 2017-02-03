@@ -5,18 +5,19 @@
         .module('myApp')
         .controller('HomeController', HomeController);
  
-    HomeController.$inject = ['$state','$stateParams', '$timeout','$rootScope', '$scope','AuthenticationService' , 'UserService'];
-    function HomeController($state,$stateParams,$timeout,$scope,$rootScope, AuthenticationService,UserService) {
+    HomeController.$inject = ['$state','$stateParams', '$timeout','$rootScope', '$scope','AuthenticationService' , 'UserService','SessionService'];
+    function HomeController($state,$stateParams,$timeout,$scope,$rootScope, AuthenticationService,UserService,SessionService) {
  	
 
- 
+if(typeof SessionService.get("userId") !== "undefined")
+       $state.go('auth'); 
  
 
-		$scope.user = $stateParams.obj;
+		$scope.user = SessionService.get("userId");
         $scope.formInfo = {};
-        loadCurrentUser();
+   
      $scope.msg1 = null;
-   if(  $scope.user === 'Admin'){
+   if(  SessionService.get("userId") === 'Admin'){
     $scope.data = [{"name":'Add Users',"link":'.adminAddUser'}, {"name":'View Users',"link":'.adminViewUsers'}];
      $state.go('home.adminAddUser'); 
   }
@@ -26,15 +27,11 @@
   $state.go('home.oview'); 
 }
 
-     function loadCurrentUser() {
+$scope.signOut = function() {
+     SessionService.unset("userId");
+    };
 
 
-
-            UserService.GetByUsername($rootScope.globals.currentUser.username)
-                .then(function (user) {
-                     	$scope.user = user.username;
-                });
-        }
 
 
     

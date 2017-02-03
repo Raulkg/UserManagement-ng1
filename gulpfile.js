@@ -11,6 +11,14 @@ var del = require('del');
 var stripDebug = require('gulp-strip-debug');
 var vinylPaths = require('vinyl-paths');
 var browserSync = require('browser-sync');
+var ghPages = require('gulp-gh-pages');
+
+
+gulp.task('deploy', function() {
+  return gulp.src('./docs/**/*')
+    .pipe(ghPages());
+});
+
 
 
 
@@ -67,7 +75,7 @@ gulp.task('connect', function () {
 gulp.task('build', function() {
   runSequence(
   	
-    ['lint', 'minify-css', 'copy-html-files', 'copy-bower-components', 'connect']
+    ['lint', 'minify-css', 'minify-js','copy-html-files', 'copy-bower-components', 'connect']
   );
 });
 

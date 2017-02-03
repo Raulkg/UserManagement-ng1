@@ -8,7 +8,7 @@
     <ul class="nav navbar-nav">
      <!--  <li class="active"><a href="#">Home</a></li> -->
  		<li ng-repeat ="myItem in data"  ui-sref-active="active"><a ui-sref="{{myItem.link}}"  >{{myItem.name}}</a></li>
-      <li><a href="#">Sign Out</a></li>
+      <li><a ng-click="signOut()" href="#">Sign Out</a></li>
     </ul>
   </div>
 </nav>

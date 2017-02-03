@@ -5,8 +5,8 @@
         .module('myApp')
         .controller('OtherUserController', OtherUserController);
  
-    OtherUserController.$inject = ['$state', '$rootScope', '$scope','AuthenticationService' , 'UserService'];
-    function OtherUserController($state, $scope,$rootScope, AuthenticationService,UserService) {
+    OtherUserController.$inject = ['$state', '$rootScope', '$scope','AuthenticationService' , 'UserService','SessionService'];
+    function OtherUserController($state, $scope,$rootScope, AuthenticationService,UserService,SessionService) {
  	
 
  
@@ -22,12 +22,12 @@
 
         loadCurrentUser();
 
- 
+ console.log("reched");
      function loadCurrentUser() {
 
 
 
-            UserService.GetByUsername($rootScope.globals.currentUser.username)
+            UserService.GetByUsername(SessionService.get("userId") )
                 .then(function (user) {
                      	$scope.usero = user;
                 });

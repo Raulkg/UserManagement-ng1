@@ -5,8 +5,8 @@
         .module('myApp')
         .controller('LoginController', LoginController);
  
-    LoginController.$inject = ['$state', '$scope','$cookies','$window','AuthenticationService' , 'UserService','rememberMeService'];
-    function LoginController($state,  $scope, $cookies,$window, AuthenticationService,UserService,rememberMeService) {
+    LoginController.$inject = ['$state', '$scope','$cookies','$window','AuthenticationService' , 'UserService','rememberMeService','SessionService'];
+    function LoginController($state,  $scope, $cookies,$window, AuthenticationService,UserService,rememberMeService, SessionService) {
 
         $scope.error = null;
         var vm = this;
@@ -48,6 +48,7 @@
                     AuthenticationService.SetCredentials(vm.username, vm.password);
    
                     $state.go('home',{obj:vm.username});
+                    SessionService.set("userId", vm.username);
  
                 } else {
                  

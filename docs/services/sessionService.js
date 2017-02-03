@@ -1,0 +1,1 @@
+!function(){"use strict";function t(t){function e(t){return r.getItem(t)}function n(t,e){r.setItem(t,angular.toJson(e))}function o(t){r.removeItem(t)}var r=t.localStorage,u={};return u.get=e,u.set=n,u.unset=o,u}angular.module("myApp").factory("SessionService",t),t.$inject=["$window"]}();
